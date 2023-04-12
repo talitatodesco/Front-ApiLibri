@@ -22,6 +22,7 @@ app.get('/', (req, res)=>{
 /*CADASTRO*/
 app.get('/categoria', (req, res)=>{
     res.render('categoria/index');
+    // res.redirect('/listagemCategorias');
 });
 
 /*LISTAGEM*/
@@ -75,8 +76,20 @@ app.post('/editarCategoria', (req, res)=>{
 
     axios.put(urlEditar, req.body)
         .then((response)=>{
-            res.send('DADO ALTERADO');
+            res.redirect('/listagemCategorias');
         });
+
+});
+
+app.get('/excluirCategoria/:cod_categoria', (req, res)=>{
+    let {cod_categoria} = req.params;
+
+    const  urlExcluirCategoria = `http://localhost:3000/excluirCategoria/${cod_categoria}`;
+
+    axios.delete(urlExcluirCategoria)
+    .then((response) => {
+        res.redirect('/listagemCategorias');
+    });
 
 });
 
